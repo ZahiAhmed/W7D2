@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-    
+    before_validation :ensure_session_token
+
     attr_reader: :password
 
     def self.generate_unique_session_token
@@ -21,6 +22,20 @@ class User < ApplicationRecord
         @password = new_pass
     end
 
+    def is_password?(new_pass)
+        password_object = BCrypt::Password.new(self.password_digest)
+        password_object.is_password?(new_pass)
+    end
 
+    def self.find_by_credentials(email, password)
+        user = User.find_by(email: email)
 
+        if user && is_password?(password)
+            user
+        else
+            nil
+        end
+    end
+
+    
 end
