@@ -14,4 +14,16 @@ class SessionsController < ApplicationController
             )
         end
     end
+
+    def new
+        @user = User.new
+        render :new
+    end
+
+    def destroy
+        if logged_in?
+            logout!
+        end
+        redirect_to new_session_url
+    end
 end
