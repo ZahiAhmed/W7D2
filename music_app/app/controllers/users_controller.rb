@@ -8,10 +8,16 @@ class UsersController < ApplicationController
         @user = User.new(params)
 
         if @user.save 
+            login(@user)
             redirect_to user_url(@user)
         else
             render :new
         end
+    end
+
+    def show
+        @user = User.find(params)
+        render :show
     end
 
     
