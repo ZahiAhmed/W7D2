@@ -5,7 +5,8 @@ class UsersController < ApplicationController
     end
 
     def create
-        @user = User.new(params)
+        debugger
+        @user = User.new(user_params)
 
         if @user.save 
             login!(@user)
@@ -16,9 +17,15 @@ class UsersController < ApplicationController
     end
 
     def show
-        @user = User.find(params)
+        @user = User.find(user_params)
         render :show
     end
 
+    private
+
+    def user_params
+
+        params.require(:user).permit(:email, :password, :session_token)
+    end
 
 end

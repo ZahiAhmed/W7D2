@@ -1,7 +1,7 @@
 class User < ApplicationRecord
     before_validation :ensure_session_token
 
-    attr_reader: :password
+    attr_reader :password
 
     def self.generate_unique_session_token
         SecureRandom::urlsafe_base64
